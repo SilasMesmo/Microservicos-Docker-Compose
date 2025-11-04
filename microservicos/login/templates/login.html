@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login da API</title>
+</head>
+<body>
+    <h1>Faça Login na API</h1>
+    <form method="POST" action="/login">
+        <label for="usuario">Usuário:</label><br>
+        <input type="text" id="usuario" name="usuario"><br><br>
+
+        <label for="senha">Senha:</label><br>
+        <input type="password" id="senha" name="senha"><br><br>
+
+        <input type="submit" value="Logar">
+    </form>
+    
+    <p id="response-message"></p>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const data = {
+                usuario: form.usuario.value,
+                senha: form.senha.value
+            };
+
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json().then(data => ({
+                status: response.status, 
+                body: data
+            })))
+            .then(result => {
+                const message = document.getElementById('response-message');
+                if (result.status === 200) {
+                    message.style.color = 'green';
+                    message.textContent = 'SUCESSO! ' + result.body.mensagem;
+                } else {
+                    message.style.color = 'red';
+                    message.textContent = 'FALHA: ' + result.body.mensagem;
+                }
+            })
+            .catch(error => {
+                document.getElementById('response-message').style.color = 'red';
+                document.getElementById('response-message').textContent = 'Erro de conexão ou JSON.';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Pedidos</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+        ul { list-style-type: none; padding: 0; }
+        li { background: #f4f4f4; margin: 5px 0; padding: 10px; border-radius: 5px; }
+        .status { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Lista de Pedidos</h1>
+    <button onclick="carregarPedidos()">Carregar Pedidos</button>
+    <ul id="listaPedidos"></ul>
+
+    <script>
+        async function carregarPedidos() {
+            try {
+                const resposta = await fetch("http://localhost:8081/pedidos"); // troque localhost:5001 pelo link do ngrok quando usar
+                const pedidos = await resposta.json();
+
+                const lista = document.getElementById("listaPedidos");
+                lista.innerHTML = "";
+
+                pedidos.forEach(p => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `<b>Item:</b> ${p.item} <br> <span class="status">Status:</span> ${p.status}`;
+                    lista.appendChild(li);
+                });
+            } catch (erro) {
+                alert("Erro ao carregar pedidos: " + erro);
+            }
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  # SERVIÇO DE LOGIN
+  login:
+    build: ./login
+    container_name: micro-login
+    # Publica a porta 5000 do container na porta 8080 do seu PC (host)
+    ports:
+      - "8080:8080"
+
+  # SERVIÇO DE PEDIDOS
+  pedidos:
+    build: ./pedidos
+    container_name: micro-pedidos
+    # Publica a porta 5001 do container na porta 8081 do seu PC (host)
+    ports:
+      - "8081:8081"
