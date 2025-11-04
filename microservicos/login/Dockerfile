@@ -5,14 +5,14 @@ WORKDIR /app
 # 1. Copia o arquivo de dependências
 COPY requirements.txt .
 
-# 2. Instala as dependências (Flask)
+# 2. Instala as dependências
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 3. Copia o código da aplicação (login.py)
+# 3. Copia o código da aplicação
 COPY . .
 
 # 4. Documenta a porta que a aplicação usa
 EXPOSE 8080 
 
-# 5. Comando para executar a aplicação com o nome correto
+# 5. Comando para executar a aplicação
 CMD ["python", "login.py"]
